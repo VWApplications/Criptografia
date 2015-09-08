@@ -1,0 +1,4 @@
+.Makefile
+obj/*.o
+bin/main
+doc/*
