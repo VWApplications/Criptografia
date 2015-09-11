@@ -4,16 +4,19 @@
 #include <ios>
 #include <iomanip>
 
+#include <iostream>
+using namespace std;
+
 namespace array {
 
 std::ostream& operator<<(std::ostream &os, const array& a) {
 	std::ios::fmtflags f(os.flags()); // save formating flags
-	
+
 	os << "array #" << a.length << " [";
-	
+
 	os << std::hex << std::uppercase; // change flags
 
-	for(int i=0; i  <a.length - 1; i++ ) {
+	for(unsigned int i=0; i  <a.length - 1; i++ ) {
 		os.width(2);
 		os.fill('0');
 		os << ((int)(a.data)[i]) << " ";
@@ -21,7 +24,7 @@ std::ostream& operator<<(std::ostream &os, const array& a) {
 
 	os.width(2);
 	os.fill('0');
-		
+
 	os << ((int)(a.data)[a.length - 1]) << "]";
 
 	os.flags(f); // restore flags
@@ -29,25 +32,25 @@ std::ostream& operator<<(std::ostream &os, const array& a) {
 	return os;
 }
 
-array* create(size_t capacity) {
+array* create(const size_t& capacity) {
 	array *m = new array();
 	m->data = new byte[capacity];
 	m->length = capacity;
 	m->_tag = NORMAL_ARRAY;
-	
+
 	memset(m->data, 0, m->length);
-	
+
 	return m;
 }
 
-array* create(size_t capacity, byte* data) {
+array* create(const size_t& capacity, byte* data) {
 	array* m = create(capacity);
 	memcpy(m->data, data, capacity);
 	m->_tag = NORMAL_ARRAY;
 	return m;
 
 }
-array* wrap(size_t capacity, byte* data) {
+array* wrap(const size_t& capacity, byte* data) {
 	array* m = new array();
 	m->length = capacity;
 	m->data = data;
@@ -65,14 +68,15 @@ void destroy(array* a) {
 array* copy(const array* a) {
 	array* b = create(a->length);
 	b->_tag = a->_tag;
-	
-	if(b->_tag == NORMAL_ARRAY)
+
+	if(b->_tag == NORMAL_ARRAY) {
 		memcpy(b->data, a->data, a->length);
-	else
+	}
+	else {
 		b->data = a->data;
-		
+	}
+
 	return b;
 }
 
 }
-

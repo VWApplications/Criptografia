@@ -2,3 +2,4 @@
 obj/*.o
 bin/main
 doc/*
+inc/.READ_PECKET

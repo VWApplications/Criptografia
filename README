@@ -1,3 +1,3 @@
-Ao compilar, utilizar as seguintes flags no compilador:
+Para compilar o código utilizando estes arquivos, utilize as flags:
 
--std=c++11 -lssl -lcrypto
+-lssl -lcrypto

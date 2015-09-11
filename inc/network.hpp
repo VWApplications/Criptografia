@@ -22,13 +22,19 @@ void close(int fd);
 /*
    Writes the data in the _content_ array into the giving socket.
  */
-void write(int fd, array::array* content);
+void write(int fd, const array::array* content);
 
 /*
    Reads data from the socket specified in _fd_ and returns an array containing
    this data.
  */
 array::array* read(int fd);
+
+/*
+   Reads len bytes of data from the socket specified in _fd_ and returns an
+   array containing this data.
+ */
+array::array* read(int fd, size_t len);
 
 }
 #endif

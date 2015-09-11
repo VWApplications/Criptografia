@@ -3,6 +3,7 @@
 
 #include "array.hpp"
 
+#include <string>
 #include <openssl/rsa.h>
 
 namespace crypto {
@@ -20,12 +21,12 @@ array::array* nonce(size_t length);
 /*
    Read RSA public key from a PEM file.
  */
-RSA* rsa_read_public_key_from_PEM(const char* path);
+RSA* rsa_read_public_key_from_PEM(const std::string& path);
 
 /*
    Read RSA private key from a PEM file.
  */
-RSA* rsa_read_private_key_from_PEM(const char* path);
+RSA* rsa_read_private_key_from_PEM(const std::string& path);
 
 /*
    Releases RSA key from memory.
@@ -55,4 +56,3 @@ array::array* aes_decrypt(array::array* data, array::array* iv, array::array* ke
 }
 
 #endif
-
