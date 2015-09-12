@@ -7,13 +7,9 @@
 class Packet {
 public:
 
-	Packet(const array::array *data) {
-		byte *NumeroDeBytes = data->data;
-
-		
-
-	}
+	Packet(const array::array *data);
 
 
 };
 #endif
+
