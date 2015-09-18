@@ -1,20 +1,15 @@
 #include "network.hpp"
-
+#include "socket.hpp"
+#include "packet.hpp"
+#include <iostream>
 
 using namespace std;
 
 int main() {
 
-	cout << "Conectando ao servidor..." << endl;
+	socket Socket;
 
-	int conectar = network::connect("127.0.0.1", 3001);
-
-	if(conectar < 0) {
-		cout << "Conexão com o servidor falhou" << endl;
-		return 1;
-	}else{
-		cout << "Conexão estabelecida com sucesso" << endl;
-	}
+	Socket.conectar();
 
 	return 0;
 }
