@@ -1,5 +1,5 @@
 Makefile
 obj/*.o
-bin/main
+bin/cliente
 doc/*
 inc/.READ_PECKET
