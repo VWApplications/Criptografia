@@ -9,13 +9,7 @@
 class socket{
 public:
 	int conectar();
-	int escrever();
+	void ReceberPacote(int address, array::array *enviarPacote);
 
 };
 #endif
-
-/* int connect(const std::string& host, const int& port);
-void close(int fd);
-void write(int fd, const array::array* content);
-array::array* read(int fd);
-array::array* read(int fd, size_t len); */

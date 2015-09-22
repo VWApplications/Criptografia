@@ -7,7 +7,8 @@
 class packet {
 public:
 
-	array::array Criarpacote();
+	array::array* CriarPacoteVazio();
+	array::array* CriarPacoteCheio();
 
 };
 #endif

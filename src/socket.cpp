@@ -1,13 +1,12 @@
 #include "network.hpp"
 #include "socket.hpp"
 #include "array.hpp"
-#include "packet.hpp"
 
 using namespace std;
 
-int address;
-
 int socket::conectar() {
+
+	int address;
 
 	cout << "Iniciando Servidor ..." << endl;
 
@@ -17,17 +16,25 @@ int socket::conectar() {
 		cout << "Conexão " << address << " OK!" << endl;
 	}
 
+	return address;
 }
 
-int socket::escrever(){
+void socket::ReceberPacote(int address, array::array *enviarPacote) {
 
-	packet Packet;
-
-	const array::array *enviarPacote = Packet.Criarpacote();
+	array::array *receberPacote;
 
 	network::write(address, enviarPacote);
 
-	return address;
+	if((receberPacote = network::read(address)) == nullptr) {
+		cout << "A leitura do pacote falhou!" << endl;
+	}else{
+		cout << "Imprimindo conteudo do pacote de " << receberPacote->length << " bytes recebido" << endl;
+		for(int i=0; i<((int) receberPacote->length); i++) {
+			printf("%x ", receberPacote->data[i]);
+		}
+		printf("\n");
+	}
+
+	array::destroy(enviarPacote);
 
 }
-
