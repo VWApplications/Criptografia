@@ -21,44 +21,44 @@ array::array* packet::CriarPacoteVazio() {
 array::array* packet::CriarPacoteCheio() {
 	
 	//Criar o pacote------------------------------------------------------------
-		array::array *pacote = array::create(27);
+		array::array *pacote = array::create(31);
 	//Criar o value do pacote---------------------------------------------------
-		array::array *ValueDoPacote = array::create(4);
+		array::array *ValueDoPacote = array::create(8);
 
 		//conteudo do pacote
-		byte valor[] = {0xAB, 0x23, 0x12, 0x43};
+		byte valor[] = {0xc6, 0x67, 0x0e, 0x84, 0xc0, 0xca, 0xbc, 0x82};
 
 	//Vai inserir o pacote valor de 4 bytes no pacote ValueDoPacote
-		memcpy(ValueDoPacote->data, valor, 4);
+		memcpy(ValueDoPacote->data, valor, 8);
 	//---------------------------------------------------------------------------
 
 	//Criar o tag e o length do pacote-------------------------------------------
-		pacote->data[0] = 0xC0; //tag
-		pacote->data[1] = 4; //length menos significativo
+		pacote->data[0] = 0xC2; //tag
+		pacote->data[1] = 8; //length menos significativo
 		pacote->data[2] = 0; //length mais significativo
 	
 	//Vai inserir o pacote valor de 4 bytes na 3° posição do pacote
-		memcpy(pacote->data +3, valor, 4);
+		memcpy(pacote->data +3, valor, 8);
 	//---------------------------------------------------------------------------
 
 	//Criando o hash-------------------------------------------------------------
 		array::array *hash = crypto::sha1(ValueDoPacote);
 
 		//Vai inserir o pacote hash de 20 bytes na 7° posição do pacote
-		memcpy(pacote->data +7, hash->data, 20);
+		memcpy(pacote->data +11, hash->data, 20);
 	//---------------------------------------------------------------------------
 
 	//Criando o pacote todo------------------------------------------------------
-		array::array *enviarPacoteCheio = array::create(31);
+		array::array *enviarPacoteCheio = array::create(35);
 		
 		// 4 bytes que iremos mandar primeiro com o tamanho do pacote
-		enviarPacoteCheio->data[0] = 27;
+		enviarPacoteCheio->data[0] = 31;
 		enviarPacoteCheio->data[1] = 0;
 		enviarPacoteCheio->data[2] = 0;
 		enviarPacoteCheio->data[3] = 0;
 
 		//Vamos pegar o pacote de 27 bytes e jogar na 4° posição do enviarPacote
-		memcpy(enviarPacoteCheio->data +4, pacote->data, 27);
+		memcpy(enviarPacoteCheio->data +4, pacote->data, 31);
 	//---------------------------------------------------------------------------
 
 	array::destroy(pacote);
