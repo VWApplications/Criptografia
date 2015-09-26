@@ -33,7 +33,7 @@ int socket::conectar() {
 	return address;
 }
 
-void socket::ReceberPacote(int address, array::array *enviarPacote) {
+array::array* socket::ReceberPacote(int address, array::array *enviarPacote) {
 
 	array::array *receberPacote;
 
@@ -51,4 +51,5 @@ void socket::ReceberPacote(int address, array::array *enviarPacote) {
 
 	array::destroy(enviarPacote);
 
+	return receberPacote;
 }

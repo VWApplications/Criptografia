@@ -55,8 +55,10 @@ RSA* rsa_read_private_key_from_PEM(const std::string& path) {
 	std::cout << "(i) " << __func__ << ": trying to open " << path << std::endl;
 	FILE* pem_file = fopen(path.c_str(), "rb");
 
-	if(pem_file == nullptr)
+	if(pem_file == nullptr) {
+		std::cout << "(e) "<< __func__ << ": could not open file: " << path << std::endl;
 		return nullptr;
+	}
 
 	RSA* rsa = PEM_read_RSAPrivateKey(pem_file, NULL,NULL, NULL);
 

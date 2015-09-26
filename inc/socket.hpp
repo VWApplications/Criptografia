@@ -16,7 +16,7 @@ public:
 	socket(string servidor, int porta);
 
 	int conectar();
-	void ReceberPacote(int address, array::array *enviarPacote);
+	array::array* ReceberPacote(int address, array::array *enviarPacote);
 
 };
 #endif
