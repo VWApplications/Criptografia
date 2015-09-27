@@ -34,10 +34,10 @@ array::array* packet::CriarPacoteVazio(byte tag) {
 		return enviarPacoteVazio;
 }
 
-array::array* packet::CriarPacoteCheio(byte tag, int tamanhoDoPacote, byte TP1, byte TP2, byte TP3, byte TP4, int tamanhoDoConteudo, byte TC1, byte TC2, array::array* conteudo) {
+array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, byte TP3, byte TP4, byte tag, int tamanhoDoConteudo, byte TC1, byte TC2, array::array* conteudo) {
 
-	//Criar o pacote------------------------------------------------------------
-		array::array *pacote = array::create(tamanhoDoPacote);
+	//Criar o pacote------------------------------------------------------------	
+	array::array *pacote = array::create(tamanhoDoPacote);
 
 	//Criar o tag e o length do pacote-------------------------------------------
 		pacote->data[0] = tag; //tag

@@ -3,17 +3,22 @@
 #include "crypto.hpp"
 #include "packet.hpp"
 #include "socket.hpp"
+#include <iostream>
 
 using namespace std;
 
 array::array *CriptografiaRSA(array::array *dados) {
-	
+
 	array::array *DadosCriptografados;
 	RSA *LerChavePublica;
+
+	//cout << *dados << endl;
 
 	LerChavePublica = crypto::rsa_read_public_key_from_PEM("/home/victor/Desktop/UnB/OO/CriptografiaEP1/doc/server_pk.pem");
 
 	DadosCriptografados = crypto::rsa_encrypt(dados, LerChavePublica);
+
+	cout << *DadosCriptografados << endl;
 
 	//array::destroy(dados);
 	//crypto::rsa_destroy_key(LerChavePublica);
@@ -42,7 +47,7 @@ array::array *DescriptografiaRSA(array::array *dados) {
 
 int main() {
 
-	int address1, address2; //fd ou endereço de conexão
+	int address1; //fd ou endereço de conexão
 	array::array *enviarPacote;
 	array::array *dadosCriptografados;
 	//array::array *dadosDescriptografados;
@@ -53,26 +58,20 @@ int main() {
 
 	//Construtores
 	packet Packet;
-	//socket Socket("45.55.185.4", 3000);
-	socket Eco("45.55.185.4", 3001);
+	socket Socket("45.55.185.4", 3000);
 
 	//Conectando ao servidor
-	//address1 = Socket.conectar();
-	address2 = Eco.conectar();
-
-	//Imprimir pacote
-	enviarPacote = Packet.CriarPacoteCheio(0xC2, 31,0x1F,0x00,0x00,0x00, 8,0x08,0x00, conteudo);
-	receberPacote = Eco.ReceberPacote(address2, enviarPacote);
+	address1 = Socket.conectar();
 
 	// Criptografa o ID com a chave publica do servidor
 	dadosCriptografados = CriptografiaRSA(conteudo);
 
-	// Receber o ID empacotado e guarda na variável "enviarPacote"
-	enviarPacote = Packet.CriarPacoteCheio(0xC2, 31,0x1F,0x00,0x00,0x00, 8,0x08,0x00, dadosCriptografados);
-	receberPacote = Eco.ReceberPacote(address2, enviarPacote);
+	// Receber o pacote e guarda na variável "enviarPacote"
+	enviarPacote = Packet.CriarPacoteCheio(535,0x17,0x02,0x00,0x00,0xC2,512,0x00,0x02, dadosCriptografados);
+	cout << *enviarPacote << endl;
 
 	// Manda o ID criptografado para o servidor e o servidor retorna a chave simetrica S criptografada
-	//receberPacote = Socket.ReceberPacote(address1, enviarPacote);
+	receberPacote = Socket.ReceberPacote(address1, enviarPacote);
 
 	// Descriptografa a a chave Simetrica e armazena na variável "dadosDescriptografados"
 	//dadosDescriptografados = DescriptografiaRSA(receberPacote);

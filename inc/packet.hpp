@@ -19,7 +19,7 @@ public:
 	byte getTag();
 
 	array::array* CriarPacoteVazio(byte tag);
-	array::array* CriarPacoteCheio(byte tag, int tamanhoDoPacote, byte TP1, byte TP2, byte TP3, byte TP4, int tamanhoDoConteudo, byte TC1, byte TC2, array::array* conteudo);
+	array::array* CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, byte TP3, byte TP4, byte tag, int tamanhoDoConteudo, byte TC1, byte TC2, array::array* conteudo);
 
 };
 #endif
