@@ -12,6 +12,12 @@ class criptografia {
 private:
 	string chavePublica;
 	string chavePrivada;
+	RSA *chave_publica;
+	RSA *chave_privada;
+	array::array *DadosCriptografados;
+	array::array *DadosDescriptografados;
+	array::array *dadosCifrados;
+	array::array *dadosDecifrados;
 
 public:
 	

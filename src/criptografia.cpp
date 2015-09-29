@@ -23,9 +23,9 @@ array::array* criptografia::CriptografiaRSA(array::array *dados) {
 
 	string chavePublica = getChavePublica();
 
-	RSA *chave_publica = crypto::rsa_read_public_key_from_PEM(chavePublica);
+	chave_publica = crypto::rsa_read_public_key_from_PEM(chavePublica);
 
-	array::array *DadosCriptografados = crypto::rsa_encrypt(dados, chave_publica);
+	DadosCriptografados = crypto::rsa_encrypt(dados, chave_publica);
 
 	//cout << *DadosCriptografados << endl;
 
@@ -39,9 +39,9 @@ array::array* criptografia::DescriptografiaRSA(array::array *dados) {
 	
 	string chavePrivada = getChavePrivada();
 
-	RSA *chave_privada = crypto::rsa_read_private_key_from_PEM(chavePrivada);
+	chave_privada = crypto::rsa_read_private_key_from_PEM(chavePrivada);
 
-	array::array *DadosDescriptografados = crypto::rsa_decrypt(dados, chave_privada);
+	DadosDescriptografados = crypto::rsa_decrypt(dados, chave_privada);
 
 	array::destroy(dados);
 
@@ -51,7 +51,7 @@ array::array* criptografia::DescriptografiaRSA(array::array *dados) {
 
 array::array* criptografia::CriptografiaAES(array::array *dados, array::array *token, array::array *chaveSimetrica) {
 
-	array::array *dadosCifrados = crypto::aes_encrypt(dados, token, chaveSimetrica);
+	dadosCifrados = crypto::aes_encrypt(dados, token, chaveSimetrica);
 
 	array::destroy(dados);
 	array::destroy(chaveSimetrica);
@@ -62,7 +62,7 @@ array::array* criptografia::CriptografiaAES(array::array *dados, array::array *t
 
 array::array* criptografia::DescriptografiaAES(array::array *dadosCifrados, array::array *token, array::array *chaveSimetrica) {
 
-	array::array *dadosDecifrados = crypto::aes_decrypt(dadosCifrados, token, chaveSimetrica);
+	dadosDecifrados = crypto::aes_decrypt(dadosCifrados, token, chaveSimetrica);
 
 	array::destroy(dadosCifrados);
 	array::destroy(chaveSimetrica);

@@ -6,28 +6,17 @@
 using namespace std;
 
 packet::packet() {
-	setTag(0xC0);
+	
 }
-
-void packet::setTag(byte tag) {
-	this->tag = tag;
-}
-
-byte packet::getTag() {
-	return tag;
-}
-
 
 array::array* packet::CriarPacoteVazio(byte tag) {
 	array::array *pacoteVazio = array::create(7);
-		
-		byte Tag = tag;
-		
+				
 		pacoteVazio->data[0] = 0x03;
 		pacoteVazio->data[1] = 0;
 		pacoteVazio->data[2] = 0;
 		pacoteVazio->data[3] = 0;
-		pacoteVazio->data[4] = Tag;
+		pacoteVazio->data[4] = tag;
 		pacoteVazio->data[5] = 0;
 		pacoteVazio->data[6] = 0;
 
@@ -37,7 +26,7 @@ array::array* packet::CriarPacoteVazio(byte tag) {
 array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, byte TP3, byte TP4, byte tag, int tamanhoDoConteudo, byte TC1, byte TC2, array::array* conteudo) {
 
 	//Criar o pacote------------------------------------------------------------	
-	array::array *pacote = array::create(tamanhoDoPacote);
+	pacote = array::create(tamanhoDoPacote);
 
 	//Criar o tag e o length do pacote-------------------------------------------
 		pacote->data[0] = tag; //tag
@@ -50,7 +39,7 @@ array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, 
 	//---------------------------------------------------------------------------
 
 	//Criando o hash-------------------------------------------------------------
-		array::array *hash = crypto::sha1(conteudo);
+		hash = crypto::sha1(conteudo);
 
 		//Vai inserir o pacote hash de 20 bytes a partir da 7° posição do pacote
 		int memoria = tamanhoDoConteudo+3;
@@ -59,7 +48,7 @@ array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, 
 
 	//Criando o pacote todo------------------------------------------------------
 		int pacoteTodo = tamanhoDoPacote+4;
-		array::array *pacoteCheio = array::create(pacoteTodo);
+		pacoteCheio = array::create(pacoteTodo);
 		
 		// 4 bytes que iremos mandar primeiro com o tamanho do pacote
 		pacoteCheio->data[0] = TP1;
