@@ -19,19 +19,19 @@ byte packet::getTag() {
 
 
 array::array* packet::CriarPacoteVazio(byte tag) {
-	array::array *enviarPacoteVazio = array::create(7);
+	array::array *pacoteVazio = array::create(7);
 		
 		byte Tag = tag;
 		
-		enviarPacoteVazio->data[0] = 0x03;
-		enviarPacoteVazio->data[1] = 0;
-		enviarPacoteVazio->data[2] = 0;
-		enviarPacoteVazio->data[3] = 0;
-		enviarPacoteVazio->data[4] = Tag;
-		enviarPacoteVazio->data[5] = 0;
-		enviarPacoteVazio->data[6] = 0;
+		pacoteVazio->data[0] = 0x03;
+		pacoteVazio->data[1] = 0;
+		pacoteVazio->data[2] = 0;
+		pacoteVazio->data[3] = 0;
+		pacoteVazio->data[4] = Tag;
+		pacoteVazio->data[5] = 0;
+		pacoteVazio->data[6] = 0;
 
-		return enviarPacoteVazio;
+		return pacoteVazio;
 }
 
 array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, byte TP3, byte TP4, byte tag, int tamanhoDoConteudo, byte TC1, byte TC2, array::array* conteudo) {
@@ -59,23 +59,23 @@ array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, 
 
 	//Criando o pacote todo------------------------------------------------------
 		int pacoteTodo = tamanhoDoPacote+4;
-		array::array *enviarPacoteCheio = array::create(pacoteTodo);
+		array::array *pacoteCheio = array::create(pacoteTodo);
 		
 		// 4 bytes que iremos mandar primeiro com o tamanho do pacote
-		enviarPacoteCheio->data[0] = TP1;
-		enviarPacoteCheio->data[1] = TP2;
-		enviarPacoteCheio->data[2] = TP3;
-		enviarPacoteCheio->data[3] = TP4;
+		pacoteCheio->data[0] = TP1;
+		pacoteCheio->data[1] = TP2;
+		pacoteCheio->data[2] = TP3;
+		pacoteCheio->data[3] = TP4;
 
 		//Vamos pegar o pacote de ... bytes e jogar na 5° posição do enviarPacote
-		memcpy(enviarPacoteCheio->data +4, pacote->data, tamanhoDoPacote);
+		memcpy(pacoteCheio->data +4, pacote->data, tamanhoDoPacote);
 	//---------------------------------------------------------------------------
 
 	array::destroy(pacote);
 	array::destroy(hash);
 	array::destroy(conteudo);
 
-	return enviarPacoteCheio;
+	return pacoteCheio;
 }
 
 

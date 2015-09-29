@@ -21,13 +21,13 @@ string criptografia::getChavePrivada() {
 
 array::array* criptografia::CriptografiaRSA(array::array *dados) {
 
-	string ChavePublica = getChavePublica();
+	string chavePublica = getChavePublica();
 
-	RSA *LerChavePublica = crypto::rsa_read_public_key_from_PEM(ChavePublica);
+	RSA *chave_publica = crypto::rsa_read_public_key_from_PEM(chavePublica);
 
-	array::array *DadosCriptografados = crypto::rsa_encrypt(dados, LerChavePublica);
+	array::array *DadosCriptografados = crypto::rsa_encrypt(dados, chave_publica);
 
-	cout << *DadosCriptografados << endl;
+	//cout << *DadosCriptografados << endl;
 
 	array::destroy(dados);
 
@@ -37,11 +37,11 @@ array::array* criptografia::CriptografiaRSA(array::array *dados) {
 
 array::array* criptografia::DescriptografiaRSA(array::array *dados) {
 	
-	string ChavePrivada = getChavePrivada();
+	string chavePrivada = getChavePrivada();
 
-	RSA *LerChavePrivada = crypto::rsa_read_private_key_from_PEM(ChavePrivada);
+	RSA *chave_privada = crypto::rsa_read_private_key_from_PEM(chavePrivada);
 
-	array::array *DadosDescriptografados = crypto::rsa_decrypt(dados, LerChavePrivada);
+	array::array *DadosDescriptografados = crypto::rsa_decrypt(dados, chave_privada);
 
 	array::destroy(dados);
 

@@ -34,23 +34,23 @@ int socket::conectar() {
 	return address;
 }
 
-array::array* socket::ReceberPacote(int address, array::array *enviarPacote) {
+array::array* socket::ReceberPacote(int address, array::array *pacoteEnviado) {
 
-	array::array *receberPacote;
+	array::array *pacoteRecebido;
 
-	network::write(address, enviarPacote);
+	network::write(address, pacoteEnviado);
 
-	if((receberPacote = network::read(address)) == nullptr) {
+	if((pacoteRecebido = network::read(address)) == nullptr) {
 		cout << "A leitura do pacote falhou!" << endl;
 	}else{
-		cout << "Imprimindo conteudo do pacote de " << receberPacote->length << " bytes recebido" << endl;
-		for(int i=0; i<((int) receberPacote->length); i++) {
-			printf("%x ", receberPacote->data[i]);
+		cout << "Imprimindo conteudo do pacote de " << pacoteRecebido->length << " bytes recebido" << endl;
+		for(int i=0; i<((int) pacoteRecebido->length); i++) {
+			printf("%x ", pacoteRecebido->data[i]);
 		}
 		cout << endl;
 	}
 
-	array::destroy(enviarPacote);
+	array::destroy(pacoteEnviado);
 
-	return receberPacote;
+	return pacoteRecebido;
 }
