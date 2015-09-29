@@ -44,7 +44,11 @@ array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, 
 		pacote->data[1] = TC1; //length menos significativo
 		pacote->data[2] = TC2; //length mais significativo
 	
+<<<<<<< HEAD
 	//Vai inserir "tamanhoDoConteudo" com o conteudo a partir da 4° posição do pacote
+=======
+	//Vai inserir "tamanhoDoConteudo" com o conteudo a partir da 3° posição do pacote
+>>>>>>> dad31d2c1ee76721063e9756f79c41d873cc4d7f
 		memcpy(pacote->data +3, conteudo->data, tamanhoDoConteudo);
 	//---------------------------------------------------------------------------
 

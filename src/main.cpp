@@ -14,6 +14,7 @@ int main() {
 	array::array *enviarPacote;
 	array::array *receberPacote;
 	array::array *IDCriptografado;
+<<<<<<< HEAD
 	//array::array *dadosDescriptografados;
 	//array::array *chaveSimetrica;
 	//array::array *tokenA;
@@ -25,6 +26,16 @@ int main() {
 	byte OBJ[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
 	byte* obj = OBJ;
 	array::array* object = array::create(sizeof(OBJ), obj);
+=======
+	//array::array *chaveSimetrica;
+	//array::array *tokenA;
+	//array::array *tokenT;
+	//array::array *dadosDescriptografados;
+	//array::array *objeto;
+	byte ID[] = {0xc6, 0x67, 0x0e, 0x84, 0xc0, 0xca, 0xbc, 0x82};
+	byte* id = ID;
+	array::array* conteudo = array::create(8, id);
+>>>>>>> dad31d2c1ee76721063e9756f79c41d873cc4d7f
 
 	//Construtores
 	criptografia Cript;
@@ -38,29 +49,42 @@ int main() {
 
 	// Criptografa o ID com a chave publica do servidor
 	IDCriptografado = Cript.CriptografiaRSA(conteudo);
+<<<<<<< HEAD
 	int tamanhoDoID = IDCriptografado->length;
 	int tamanhoDoConteudo = tamanhoDoID+23;
 
 	// Receber o pacote e guarda na variável "enviarPacote"
 	enviarPacote = Packet.CriarPacoteCheio(tamanhoDoConteudo,0x17,0x02,0x00,0x00,0xC2,tamanhoDoID,0x00,0x02, IDCriptografado);
+=======
+
+	// Receber o pacote e guarda na variável "enviarPacote"
+	enviarPacote = Packet.CriarPacoteCheio(535,0x17,0x02,0x00,0x00,0xC2,512,0x00,0x02, IDCriptografado);
+>>>>>>> dad31d2c1ee76721063e9756f79c41d873cc4d7f
 	cout << *enviarPacote << endl;
 
 	// Manda o ID criptografado para o servidor e o servidor retorna a chave simetrica S criptografada
 	receberPacote = Socket.ReceberPacote(address, enviarPacote);
 
+<<<<<<< HEAD
 	cout << tamanhoDoID << endl;
 	cout << tamanhoDoConteudo << endl;
 	cout << enviarPacote->length << endl;
 	cout << conteudo->length << endl;
 	cout << object->length << endl;
 
+=======
+>>>>>>> dad31d2c1ee76721063e9756f79c41d873cc4d7f
 	// Descriptografa a a chave Simetrica e armazena na variável "chaveSimetrica"
 	/* chaveSimetrica = Cript.DescriptografiaRSA(receberPacote); */
 
 // PROTOCOLO DE AUTENTICAÇÃO ---------------------------------------------------------------------------------------------------------------
 
 	// Criar um pacote com o ID criptografado e mandar para o protocolo de autenticação (tag 0xA0) e ele retorna o token A criptografado
+<<<<<<< HEAD
 	/* enviarPacote = Packet.CriarPacoteCheio(tamanhoDoConteudo,0x17,0x02,0x00,0x00,0xA0,tamanhoDoID,0x00,0x02, IDCriptografado);
+=======
+	/* enviarPacote = Packet.CriarPacoteCheio(535,0x17,0x02,0x00,0x00,0xA0,512,0x00,0x02, IDCriptografado);
+>>>>>>> dad31d2c1ee76721063e9756f79c41d873cc4d7f
 	   receberPacote = Socket.ReceberPacote(address, enviarPacote); */
 
 	// Descriptografa o token A e armazena na variável "tokenA"
@@ -71,6 +95,7 @@ int main() {
 	   receberPacote = Socket.ReceberPacote(address, enviarPacote); */
 
 	// Descriptografar o array M com a chave simetrica S e o token A e receber o array M descriptografado
+<<<<<<< HEAD
 	/* dadosDescriptografados = Cript.DescriptografiaAES(receberPacote, tokenA, chaveSimetrica); 
 	   cout << *dadosDescriptografados << endl;
 	   int tamanhoDoArrayM = sizeof(dadosDescriptografados);
@@ -78,6 +103,12 @@ int main() {
 	
 	// Enviar o pacote array M descriptografado para o servidor comparar e ver se está autenticado e ele retorna o token T criptografado.
 	/* enviarPacote = Packet.CriarPacoteCheio(tamanhoDoPacoteM,0x??,0x??,0x??,0x??,0xA5,tamanhoDoArrayM,0x??,0x??, dadosDescriptografados);
+=======
+	/* dadosDescriptografados = Cript.DescriptografiaAES(receberPacote, tokenA, chaveSimetrica); */
+	
+	// Enviar o pacote array M descriptografado para o servidor comparar e ver se está autenticado e ele retorna o token T criptografado.
+	/* enviarPacote = Packet.CriarPacoteCheio(tamanhoDoPacote,0x??,0x??,0x??,0x??,0xA5,tamanhoDoConteudo,0x??,0x??, dadosDescriptografados);
+>>>>>>> dad31d2c1ee76721063e9756f79c41d873cc4d7f
 	   receberPacote = Socket.ReceberPacote(address, enviarPacote);
 	   tokenT = Cript.DescriptografiaAES(receberPacote, tokenA, chaveSimetrica); */
 
@@ -86,8 +117,13 @@ int main() {
 
 // PROTOCOLO DE REQUISIÇÃO -----------------------------------------------------------------------------------------------------------------
 	
+<<<<<<< HEAD
 	// Criptografar o ID do objeto com a chave S e o token T
 	/* enviarPacote = CriptografiaAES(object, tokenT, chaveSimetrica);  */
+=======
+	// Criptografar o ID do objeto (que objeto é esse?) com a chave S e o token T
+	/* enviarPacote = CriptografiaAES(conteudo, tokenT, chaveSimetrica); */
+>>>>>>> dad31d2c1ee76721063e9756f79c41d873cc4d7f
 
 	// O servidor irá verificar se o ID bate com o ID do objeto que eles tem, se bater eles retornam o OBJETO criptografado
 	/* receberPacote = Socket.ReceberPacote(address, enviarPacote); */
