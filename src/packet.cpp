@@ -34,29 +34,22 @@ array::array* packet::CriarPacoteVazio(byte tag) {
 		return enviarPacoteVazio;
 }
 
-array::array* packet::CriarPacoteCheio(byte tag, int tamanhoDoPacote, byte TP1, byte TP2, byte TP3, byte TP4, int tamanhoDoConteudo, byte TC1, byte TC2, array::array* conteudo) {
+array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, byte TP3, byte TP4, byte tag, int tamanhoDoConteudo, byte TC1, byte TC2, array::array* conteudo) {
 
-
-	//Criar o pacote------------------------------------------------------------
-		array::array *pacote = array::create(tamanhoDoPacote);
-	//Criar o value do pacote---------------------------------------------------
-		array::array *ValueDoPacote = array::create(tamanhoDoConteudo);	
-
-	//Vai inserir o pacote valor de "tamanhoDoConteudo" bytes no pacote ValueDoPacote
-		memcpy(ValueDoPacote->data, conteudo, tamanhoDoConteudo);
-	//---------------------------------------------------------------------------
+	//Criar o pacote------------------------------------------------------------	
+	array::array *pacote = array::create(tamanhoDoPacote);
 
 	//Criar o tag e o length do pacote-------------------------------------------
 		pacote->data[0] = tag; //tag
 		pacote->data[1] = TC1; //length menos significativo
 		pacote->data[2] = TC2; //length mais significativo
 	
-	//Vai inserir "tamanhoDoConteudo" com o conteudo a partir da 3° posição do pacote
-		memcpy(pacote->data +3, conteudo, tamanhoDoConteudo);
+	//Vai inserir "tamanhoDoConteudo" com o conteudo a partir da 4° posição do pacote
+		memcpy(pacote->data +3, conteudo->data, tamanhoDoConteudo);
 	//---------------------------------------------------------------------------
 
 	//Criando o hash-------------------------------------------------------------
-		array::array *hash = crypto::sha1(ValueDoPacote);
+		array::array *hash = crypto::sha1(conteudo);
 
 		//Vai inserir o pacote hash de 20 bytes a partir da 7° posição do pacote
 		int memoria = tamanhoDoConteudo+3;
@@ -73,13 +66,13 @@ array::array* packet::CriarPacoteCheio(byte tag, int tamanhoDoPacote, byte TP1, 
 		enviarPacoteCheio->data[2] = TP3;
 		enviarPacoteCheio->data[3] = TP4;
 
-		//Vamos pegar o pacote de 27 bytes e jogar na 4° posição do enviarPacote
+		//Vamos pegar o pacote de ... bytes e jogar na 5° posição do enviarPacote
 		memcpy(enviarPacoteCheio->data +4, pacote->data, tamanhoDoPacote);
 	//---------------------------------------------------------------------------
 
 	array::destroy(pacote);
 	array::destroy(hash);
-	array::destroy(ValueDoPacote);
+	array::destroy(conteudo);
 
 	return enviarPacoteCheio;
 }

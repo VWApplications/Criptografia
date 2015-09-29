@@ -1,6 +1,7 @@
 #include "network.hpp"
 #include "socket.hpp"
 #include "array.hpp"
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -46,7 +47,7 @@ array::array* socket::ReceberPacote(int address, array::array *enviarPacote) {
 		for(int i=0; i<((int) receberPacote->length); i++) {
 			printf("%x ", receberPacote->data[i]);
 		}
-		printf("\n");
+		cout << endl;
 	}
 
 	array::destroy(enviarPacote);
