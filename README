@@ -1,3 +1,15 @@
-Para compilar o código utilizando estes arquivos, utilize as flags:
+Para compilar o código utilizando estes arquivos, utilize o make:
 
--lssl -lcrypto
+Universidade de Brasilia, campus Gama, FGA, Disciplina de orientação a objeto EP1 
+
+array.cpp, crypto.cpp, network.cpp são funções de auxilio para o trabalho
+
+- criptografia é a classe que tem as funções de criptografia
+- packet é a classe de criar os pacotes com conteúdo e sem conteúdo
+- socket é a classe para se conectar com o servidor
+- cliente é uma classe abstrata para as classes abaixo.
+- registration é a classe que representa o protoco de Registro
+- authentication é a classe que representa o protoco de autenticação
+- request é a classe que representa o protoco de requisição
+- main é a função principal
+
