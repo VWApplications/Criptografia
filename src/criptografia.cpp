@@ -25,11 +25,11 @@ array::array* criptografia::CriptografiaRSA(array::array *dados) {
 
 	RSA *chave_publica = crypto::rsa_read_public_key_from_PEM(chavePublica);
 
-	//cout << "ID: " << *dados << endl;
+	cout << "ID: " << *dados << endl;
 
 	array::array *DadosCriptografados = crypto::rsa_encrypt(dados, chave_publica);
 
-	//cout << "ID Criptografado: "<< *DadosCriptografados << endl;
+	cout << "ID Criptografado: "<< *DadosCriptografados << endl;
 
 	//array::destroy(dados);
 

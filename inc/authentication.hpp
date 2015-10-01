@@ -18,9 +18,8 @@ private:
 public:
 	
 	authentication();
-	authentication(byte *ID);
+	authentication(array::array *ID);
 	array::array *ProtocoloDeAutenticacao(array::array *conteudo, array::array *chaveSimetrica, int address);
-	array::array *CriarConteudo();
 
 
 };

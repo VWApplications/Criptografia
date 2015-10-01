@@ -14,9 +14,8 @@ class request: public cliente {
 public:
 	
 	request();
-	request(byte *OBJ);
+	request(array::array *OBJ);
 	array::array *ProtocoloDeRequisicao(array::array *conteudo, array::array *tokenT, array::array *chaveSimetrica, int address);
-	array::array *CriarConteudo();
 
 
 };

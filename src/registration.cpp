@@ -9,19 +9,12 @@ using namespace std;
 
 registration::registration() {
 	byte id[] = {0xC6, 0x67, 0x0E, 0x84, 0xC0, 0xCA, 0xBC, 0x82};
-	ID = id;
+	byte *conteudo = id;
+	ID = array::create(sizeof(id), conteudo);
 }
 
-registration::registration(byte *ID) {
+registration::registration(array::array *ID) {
 	setID(ID);
-}
-
-array::array *registration::CriarConteudo() {
-
-	byte* id = getID();
-	array::array* conteudo = array::create(sizeof(ID), id);
-
-	return conteudo;
 }
 
 array::array *registration::ProtocoloDeRegistro(array::array *conteudo, int address) {
@@ -38,7 +31,7 @@ array::array *registration::ProtocoloDeRegistro(array::array *conteudo, int addr
 
 	// Receber o pacote e guarda na variável "pacoteCriado"
 	pacoteCriado = Packet.CriarPacoteCheio(tamanhoDoConteudo,0x17,0x02,0x00,0x00,0xC2,tamanhoDoID,0x00,0x02, IDCriptografado);
-	//cout << "Pacote com os 4 bytes do tamanho do pacote, tag, 2 bytes com o tamanho do conteudo, 512 bytes do ID criptografado e os 20 bytes de Hash: "<< *pacoteCriado << endl;
+	cout << "Pacote com os 4 bytes do tamanho do pacote, tag, 2 bytes com o tamanho do conteudo, 512 bytes do ID criptografado e os 20 bytes de Hash: "<< *pacoteCriado << endl;
 
 	// Manda o ID criptografado para o servidor e o servidor retorna a chave simetrica S criptografada
 	pacoteRecebido = Socket.ReceberPacote(address, pacoteCriado);

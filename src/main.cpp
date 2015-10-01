@@ -21,8 +21,8 @@ int main() {
 	//authentication Protocolo2;
 	//request Protocolo3;
 
-	ID = Protocolo1.CriarConteudo();
-	//OBJ = Protocolo3.CriarConteudo();
+	ID = Protocolo1.getID();
+	//OBJ = Protocolo3.getOBJ();
 
 	address = Socket.conectar();
 

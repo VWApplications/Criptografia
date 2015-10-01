@@ -9,19 +9,12 @@ using namespace std;
 
 authentication::authentication() {
 	byte id[] = {0xC6, 0x67, 0x0E, 0x84, 0xC0, 0xCA, 0xBC, 0x82};
-	ID = id;
+	byte *conteudo = id;
+	ID = array::create(sizeof(id), conteudo);
 }
 
-authentication::authentication(byte *ID) {
+authentication::authentication(array::array *ID) {
 	setID(ID);
-}
-
-array::array *authentication::CriarConteudo() {
-
-	byte* id = getID();
-	array::array* conteudo = array::create(sizeof(ID), id);
-
-	return conteudo;
 }
 
 array::array *authentication::ProtocoloDeAutenticacao(array::array *conteudo, array::array *chaveSimetrica, int address) {

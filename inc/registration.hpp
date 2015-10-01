@@ -14,9 +14,8 @@ class registration: public cliente {
 public:
 	
 	registration();
-	registration(byte *ID);
+	registration(array::array *ID);
 	array::array *ProtocoloDeRegistro(array::array *conteudo, int address);
-	array::array *CriarConteudo();
 
 
 };

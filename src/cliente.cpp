@@ -8,32 +8,34 @@
 using namespace std;
 
 cliente::cliente() {
+
 	byte id[] = {0xC6, 0x67, 0x0E, 0x84, 0xC0, 0xCA, 0xBC, 0x82};
-	ID = id;
+	byte *conteudo = id;
+	ID = array::create(sizeof(id), conteudo);
+
 	byte obj[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-	OBJ = obj;
+	byte *object = obj;
+	OBJ = array::create(sizeof(obj), object);
+
 }
 
-cliente::cliente(byte *ID, byte *OBJ) {
+cliente::cliente(array::array *ID, array::array *OBJ) {
 	setID(ID);
 	setOBJ(OBJ);
 }
 
-void cliente::setID(byte ID[]) {
-	byte *id = ID;
-	this->ID = id;
+void cliente::setID(array::array *ID) {
+	this->ID = ID;
 }
 
-byte *cliente::getID() {
+array::array *cliente::getID() {
 	return ID;
 }
 
-void cliente::setOBJ(byte OBJ[]) {
-	byte *obj = OBJ;
-	this->OBJ = obj;
+void cliente::setOBJ(array::array *OBJ) {
+	this->OBJ = OBJ;
 }
 
-byte *cliente::getOBJ() {
+array::array *cliente::getOBJ() {
 	return OBJ;
 }
-

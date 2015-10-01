@@ -7,8 +7,8 @@ using namespace std;
 
 class cliente {
 protected:
-	byte *ID;
-	byte *OBJ;
+	array::array *ID;
+	array::array *OBJ;
 	array::array *pacoteCriado;
 	array::array *pacoteRecebido;
 	array::array *IDCriptografado;
@@ -16,13 +16,12 @@ protected:
 public:
 	
 	cliente();
-	cliente(byte ID[], byte OBJ[]);
+	cliente(array::array *ID, array::array *OBJ);
 
-	virtual array::array *CriarConteudo() = 0;
-	void setID(byte ID[]);
-	byte *getID();
-	void setOBJ(byte OBJ[]);
-	byte *getOBJ();
+	void setID(array::array *ID);
+	array::array *getID();
+	void setOBJ(array::array *OBJ);
+	array::array *getOBJ();
 	
 
 

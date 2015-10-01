@@ -8,19 +8,12 @@ using namespace std;
 
 request::request() {
 	byte obj[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-	OBJ = obj;
+	byte *object = obj;
+	OBJ = array::create(sizeof(obj), object);
 }
 
-request::request(byte *OBJ) {
+request::request(array::array *OBJ) {
 	setOBJ(OBJ);
-}
-
-array::array *request::CriarConteudo() {
-
-	byte* obj = getOBJ();
-	array::array* conteudo = array::create(sizeof(OBJ), obj);
-
-	return conteudo;
 }
 
 array::array *request::ProtocoloDeRequisicao(array::array *conteudo, array::array *tokenT, array::array *chaveSimetrica, int address) {
