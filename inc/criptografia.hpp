@@ -1,10 +1,10 @@
 #ifndef CRIPTOGRAFIA_H
 #define CRIPTOGRAFIA_H
 
-#include <iostream>
-#include <string>
 #include "array.hpp"
 #include "crypto.hpp"
+#include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -12,12 +12,6 @@ class criptografia {
 private:
 	string chavePublica;
 	string chavePrivada;
-	RSA *chave_publica;
-	RSA *chave_privada;
-	array::array *DadosCriptografados;
-	array::array *DadosDescriptografados;
-	array::array *dadosCifrados;
-	array::array *dadosDecifrados;
 
 public:
 	

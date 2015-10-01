@@ -2,16 +2,10 @@
 #define PACKET_H
 
 #include "array.hpp"
+#include "crypto.hpp"
 #include <iostream>
 
 class packet {
-private:
-	byte tag;
-	array::array *pacote;
-	array::array *hash;
-	array::array *pacoteCheio;
-
-
 public:
 
 	packet();
@@ -21,5 +15,4 @@ public:
 
 };
 #endif
-
 

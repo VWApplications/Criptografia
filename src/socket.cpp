@@ -16,6 +16,23 @@ socket::socket(string servidor, int porta) {
 	setPorta(porta);
 }
 
+void socket::setServidor(string servidor) {
+	this->servidor = servidor;
+}
+
+string socket::getServidor() {
+	return servidor;
+}
+
+void socket::setPorta(int porta) {
+	this->porta = porta;
+}
+
+int socket::getPorta() {
+	return porta;
+}
+
+
 int socket::conectar() {
 
 	int address;

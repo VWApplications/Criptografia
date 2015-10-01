@@ -25,21 +25,25 @@ array::array* packet::CriarPacoteVazio(byte tag) {
 
 array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, byte TP3, byte TP4, byte tag, int tamanhoDoConteudo, byte TC1, byte TC2, array::array* conteudo) {
 
-	//Criar o pacote------------------------------------------------------------	
-	pacote = array::create(tamanhoDoPacote);
+	//Criar o pacote-------------------------------------------------------------	
+		array::array *pacote = array::create(tamanhoDoPacote);
+	//---------------------------------------------------------------------------
+
 
 	//Criar o tag e o length do pacote-------------------------------------------
 		pacote->data[0] = tag; //tag
 		pacote->data[1] = TC1; //length menos significativo
 		pacote->data[2] = TC2; //length mais significativo
+	//---------------------------------------------------------------------------
 	
 
 	//Vai inserir "tamanhoDoConteudo" com o conteudo a partir da 4° posição do pacote
 		memcpy(pacote->data +3, conteudo->data, tamanhoDoConteudo);
 	//---------------------------------------------------------------------------
 
+
 	//Criando o hash-------------------------------------------------------------
-		hash = crypto::sha1(conteudo);
+		array::array *hash = crypto::sha1(conteudo);
 
 		//Vai inserir o pacote hash de 20 bytes a partir da 7° posição do pacote
 		int memoria = tamanhoDoConteudo+3;
@@ -48,7 +52,7 @@ array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, 
 
 	//Criando o pacote todo------------------------------------------------------
 		int pacoteTodo = tamanhoDoPacote+4;
-		pacoteCheio = array::create(pacoteTodo);
+		array::array *pacoteCheio = array::create(pacoteTodo);
 		
 		// 4 bytes que iremos mandar primeiro com o tamanho do pacote
 		pacoteCheio->data[0] = TP1;
@@ -60,12 +64,10 @@ array::array* packet::CriarPacoteCheio(int tamanhoDoPacote, byte TP1, byte TP2, 
 		memcpy(pacoteCheio->data +4, pacote->data, tamanhoDoPacote);
 	//---------------------------------------------------------------------------
 
-	array::destroy(pacote);
-	array::destroy(hash);
-	array::destroy(conteudo);
+	//array::destroy(pacote);
+	//array::destroy(hash);
+	//array::destroy(conteudo);
 
 	return pacoteCheio;
 }
-
-
 

@@ -1,8 +1,8 @@
 #include "array.hpp"
-#include "packet.hpp"
 #include "crypto.hpp"
 #include "criptografia.hpp"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -23,13 +23,15 @@ array::array* criptografia::CriptografiaRSA(array::array *dados) {
 
 	string chavePublica = getChavePublica();
 
-	chave_publica = crypto::rsa_read_public_key_from_PEM(chavePublica);
+	RSA *chave_publica = crypto::rsa_read_public_key_from_PEM(chavePublica);
 
-	DadosCriptografados = crypto::rsa_encrypt(dados, chave_publica);
+	//cout << "ID: " << *dados << endl;
 
-	//cout << *DadosCriptografados << endl;
+	array::array *DadosCriptografados = crypto::rsa_encrypt(dados, chave_publica);
 
-	array::destroy(dados);
+	//cout << "ID Criptografado: "<< *DadosCriptografados << endl;
+
+	//array::destroy(dados);
 
 	return DadosCriptografados;
 
@@ -39,11 +41,11 @@ array::array* criptografia::DescriptografiaRSA(array::array *dados) {
 	
 	string chavePrivada = getChavePrivada();
 
-	chave_privada = crypto::rsa_read_private_key_from_PEM(chavePrivada);
+	RSA *chave_privada = crypto::rsa_read_private_key_from_PEM(chavePrivada);
 
-	DadosDescriptografados = crypto::rsa_decrypt(dados, chave_privada);
+	array::array *DadosDescriptografados = crypto::rsa_decrypt(dados, chave_privada);
 
-	array::destroy(dados);
+	//array::destroy(dados);
 
 	return DadosDescriptografados;
 
@@ -51,22 +53,22 @@ array::array* criptografia::DescriptografiaRSA(array::array *dados) {
 
 array::array* criptografia::CriptografiaAES(array::array *dados, array::array *token, array::array *chaveSimetrica) {
 
-	dadosCifrados = crypto::aes_encrypt(dados, token, chaveSimetrica);
+	array::array *dadosCifrados = crypto::aes_encrypt(dados, token, chaveSimetrica);
 
-	array::destroy(dados);
-	array::destroy(chaveSimetrica);
-	array::destroy(token);
+	//array::destroy(dados);
+	//array::destroy(chaveSimetrica);
+	//array::destroy(token);
 
 	return dadosCifrados;
 }
 
 array::array* criptografia::DescriptografiaAES(array::array *dadosCifrados, array::array *token, array::array *chaveSimetrica) {
 
-	dadosDecifrados = crypto::aes_decrypt(dadosCifrados, token, chaveSimetrica);
+	array::array *dadosDecifrados = crypto::aes_decrypt(dadosCifrados, token, chaveSimetrica);
 
-	array::destroy(dadosCifrados);
-	array::destroy(chaveSimetrica);
-	array::destroy(token);
+	//array::destroy(dadosCifrados);
+	//array::destroy(chaveSimetrica);
+	//array::destroy(token);
 
 	return dadosDecifrados;
 }

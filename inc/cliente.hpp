@@ -1,26 +1,30 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
-#include <iostream>
-#include "network.hpp"
 #include "array.hpp"
-#include <string>
 
 using namespace std;
 
 class cliente {
-private:
-	string servidor;
-	int porta;
+protected:
+	byte *ID;
+	byte *OBJ;
+	array::array *pacoteCriado;
+	array::array *pacoteRecebido;
+	array::array *IDCriptografado;
 
 public:
 	
 	cliente();
-	cliente(string servidor, int porta);
-	void setServidor(string servidor);
-	string getServidor();
-	void setPorta(int porta);
-	int getPorta();
+	cliente(byte ID[], byte OBJ[]);
+
+	virtual array::array *CriarConteudo() = 0;
+	void setID(byte ID[]);
+	byte *getID();
+	void setOBJ(byte OBJ[]);
+	byte *getOBJ();
+	
+
 
 };
 #endif

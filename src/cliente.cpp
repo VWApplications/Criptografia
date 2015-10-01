@@ -1,33 +1,39 @@
-#include "network.hpp"
 #include "cliente.hpp"
 #include "array.hpp"
-#include <string>
+#include "packet.hpp"
+#include "socket.hpp"
+#include <iostream>
+
 
 using namespace std;
 
 cliente::cliente() {
-	servidor = "45.55.185.4";
-	porta = 3001;
+	byte id[] = {0xC6, 0x67, 0x0E, 0x84, 0xC0, 0xCA, 0xBC, 0x82};
+	ID = id;
+	byte obj[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+	OBJ = obj;
 }
 
-cliente::cliente(string servidor, int porta) {
-	setServidor(servidor);
-	setPorta(porta);
+cliente::cliente(byte *ID, byte *OBJ) {
+	setID(ID);
+	setOBJ(OBJ);
 }
 
-void cliente::setServidor(string servidor) {
-	this->servidor = servidor;
+void cliente::setID(byte ID[]) {
+	byte *id = ID;
+	this->ID = id;
 }
 
-string cliente::getServidor() {
-	return servidor;
+byte *cliente::getID() {
+	return ID;
 }
 
-void cliente::setPorta(int porta) {
-	this->porta = porta;
+void cliente::setOBJ(byte OBJ[]) {
+	byte *obj = OBJ;
+	this->OBJ = obj;
 }
 
-int cliente::getPorta() {
-	return porta;
+byte *cliente::getOBJ() {
+	return OBJ;
 }
 
