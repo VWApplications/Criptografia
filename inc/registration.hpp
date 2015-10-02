@@ -11,11 +11,13 @@
 using namespace std;
 
 class registration: public cliente {
+private:
+	array::array *chaveSimetrica;
 public:
 	
 	registration();
-	registration(array::array *ID);
-	array::array *ProtocoloDeRegistro(array::array *conteudo, int address);
+	registration(array::array *conteudo, int address);
+	array::array *getChaveSimetrica();
 
 
 };

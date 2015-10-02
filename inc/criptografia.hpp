@@ -16,10 +16,8 @@ private:
 public:
 	
 	criptografia();
-	array::array *CriptografiaRSA(array::array *dados);
-	array::array *DescriptografiaRSA(array::array *dados);
-	array::array *CriptografiaAES(array::array *dados, array::array *token, array::array *chaveSimetrica);
-	array::array *DescriptografiaAES(array::array *dadosCifrados, array::array *token, array::array *chaveSimetrica);
+	array::array *criptografiaRSA(array::array *dados);
+	array::array *descriptografiaRSA(array::array *dados);
 	string getChavePublica();
 	string getChavePrivada();
 

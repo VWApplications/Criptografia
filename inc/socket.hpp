@@ -20,7 +20,7 @@ public:
 	socket(string servidor, int porta);
 
 	int conectar();
-	array::array* ReceberPacote(int address, array::array *pacoteEnviado);
+	array::array* receberPacote(int address, array::array *pacoteEnviado);
 	void setServidor(string servidor);
 	string getServidor();
 	void setPorta(int porta);

@@ -9,9 +9,6 @@ class cliente {
 protected:
 	array::array *ID;
 	array::array *OBJ;
-	array::array *pacoteCriado;
-	array::array *pacoteRecebido;
-	array::array *IDCriptografado;
 
 public:
 	

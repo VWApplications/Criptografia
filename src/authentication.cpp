@@ -7,52 +7,55 @@
 
 using namespace std;
 
-authentication::authentication() {
-	byte id[] = {0xC6, 0x67, 0x0E, 0x84, 0xC0, 0xCA, 0xBC, 0x82};
-	byte *conteudo = id;
-	ID = array::create(sizeof(id), conteudo);
-}
-
-authentication::authentication(array::array *ID) {
-	setID(ID);
-}
-
-array::array *authentication::ProtocoloDeAutenticacao(array::array *conteudo, array::array *chaveSimetrica, int address) {
+authentication::authentication(array::array *conteudo, array::array *chaveSimetrica, int address) {
 
 	criptografia Cript;
 	packet Packet;
 	socket Socket("45.55.185.4", 3000);
-	array::array *tokenT;
 
-	// Criptografa o ID com a chave publica do servidor
-	IDCriptografado = Cript.CriptografiaRSA(conteudo);
-	int tamanhoDoID = IDCriptografado->length;
-	int tamanhoDoConteudo = tamanhoDoID+23;
+	array::array *REQUEST_AUTH;
+	array::array *AUTH_START;
+	array::array *REQUEST_CHALLENGE;
+	array::array *CHALLENGE;
+	array::array *AUTHENTICATE;
+	array::array *AUTHENTICATED;
 
-	// Criar um pacote com o ID criptografado e mandar para o protocolo de autenticação (tag 0xA0) e ele retorna o token A criptografado
-	pacoteCriado = Packet.CriarPacoteCheio(tamanhoDoConteudo,0x17,0x02,0x00,0x00,0xA0,tamanhoDoID,0x00,0x02, IDCriptografado);
-	pacoteRecebido = Socket.ReceberPacote(address, pacoteCriado);
+	array::array *tokenA;
+	array::array *tokenA_descriptografado;
+	array::array *M;
+	array::array *M_descriptografado;
+	array::array *tokenTcriptografado;
 
-	// Descriptografa o token A e armazena na variável "tokenA"
-	tokenA = Cript.DescriptografiaRSA(pacoteRecebido);
+	REQUEST_AUTH = Packet.criarPacoteCheio(0x17, 0x02, 0, 0, 0xA0, 0x00, 0x02, conteudo);
 
-	// Enviar um pacote vazio REQUEST_CHALLENGE para iniciar a autenticação e o servidor irá retornar um array M aleatorio criptografado
-	pacoteCriado = Packet.CriarPacoteVazio(0xA2);
-	pacoteRecebido = Socket.ReceberPacote(address, pacoteCriado);
+	AUTH_START = Socket.receberPacote(address, REQUEST_AUTH);
 
-	// Descriptografar o array M com a chave simetrica S e o token A e receber o array M descriptografado
-	dadosDescriptografados = Cript.DescriptografiaAES(pacoteRecebido, tokenA, chaveSimetrica); 
-	int tamanhoDoArrayM = dadosDescriptografados->length;
-	int tamanhoDoPacoteM = tamanhoDoArrayM+23;
-	
-	// Enviar o pacote array M descriptografado para o servidor comparar e ver se está autenticado e ele retorna o token T criptografado.
-	// Como ainda não consegui descriptografar o array M então coloquei 0x00 em tudo para poder copilar
-	pacoteCriado = Packet.CriarPacoteCheio(tamanhoDoPacoteM,0x00,0x00,0x00,0x00,0xA5,tamanhoDoArrayM,0x00,0x00, dadosDescriptografados);
-	pacoteRecebido = Socket.ReceberPacote(address, pacoteCriado);
-	tokenT = Cript.DescriptografiaAES(pacoteRecebido, tokenA, chaveSimetrica);
+	tokenA = array::create(AUTH_START->length-27);
+	memcpy(tokenA->data, AUTH_START->data + 7, AUTH_START->length-27);
+	tokenA_descriptografado = Cript.descriptografiaRSA(tokenA);
 
-	// tokenA pode ser descartado já que o só vamos usar o tokenT e a chave simetrica S
-	//array::destroy(tokenA);
+	REQUEST_CHALLENGE = Packet.criarPacoteVazio(0xA2);
 
+	CHALLENGE = Socket.receberPacote(address, REQUEST_CHALLENGE);
+
+	M = array::create(CHALLENGE->length-27);
+	memcpy(M->data, CHALLENGE->data + 7, CHALLENGE->length-27);
+	M_descriptografado = crypto::aes_decrypt(M, tokenA_descriptografado, chaveSimetrica);
+
+	AUTHENTICATE = Packet.criarPacoteCheio(0x27, 0, 0, 0, 0xA5, 0x10, 0, M_descriptografado);
+
+	AUTHENTICATED = Socket.receberPacote(address, AUTHENTICATE);
+
+
+	tokenTcriptografado = array::create(AUTHENTICATED->length-27);
+	memcpy(tokenTcriptografado->data, AUTHENTICATED->data + 7, AUTHENTICATED->length-27);
+	tokenT = crypto::aes_decrypt(tokenTcriptografado, tokenA_descriptografado, chaveSimetrica);
+
+	array::destroy(tokenA);
+	array::destroy(tokenA_descriptografado);
+
+}
+
+array::array *authentication::getTokenT() {
 	return tokenT;
 }

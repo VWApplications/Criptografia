@@ -51,7 +51,7 @@ int socket::conectar() {
 	return address;
 }
 
-array::array* socket::ReceberPacote(int address, array::array *pacoteEnviado) {
+array::array* socket::receberPacote(int address, array::array *pacoteEnviado) {
 
 	array::array *pacoteRecebido;
 
@@ -61,10 +61,7 @@ array::array* socket::ReceberPacote(int address, array::array *pacoteEnviado) {
 		cout << "A leitura do pacote falhou!" << endl;
 	}else{
 		cout << "Imprimindo conteudo do pacote de " << pacoteRecebido->length << " bytes recebido" << endl;
-		for(int i=0; i<((int) pacoteRecebido->length); i++) {
-			printf("%x ", pacoteRecebido->data[i]);
-		}
-		cout << endl;
+		cout << *pacoteRecebido << endl;
 	}
 
 	array::destroy(pacoteEnviado);

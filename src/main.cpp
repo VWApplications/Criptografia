@@ -1,5 +1,6 @@
 #include "array.hpp"
 #include "socket.hpp"
+#include "criptografia.hpp"
 #include "registration.hpp"
 #include "authentication.hpp"
 #include "request.hpp"
@@ -11,34 +12,43 @@ int main() {
 
 	int address;
 	array::array *ID;
+	array::array *OBJ;
+	array::array *IDcriptografado;
 	array::array *chaveSimetrica;
-	//array::array *OBJ;
-	//array::array *tokenT;
-	//array::array *objeto;
+	array::array *tokenT;
+	array::array *objeto;
 
 	socket Socket("45.55.185.4", 3000);
+	criptografia Cript;
 	registration Protocolo1;
-	//authentication Protocolo2;
-	//request Protocolo3;
+	request Protocolo3;
 
 	ID = Protocolo1.getID();
-	//OBJ = Protocolo3.getOBJ();
+	OBJ = Protocolo3.getOBJ();
 
 	address = Socket.conectar();
 
-	chaveSimetrica = Protocolo1.ProtocoloDeRegistro(ID, address);
+	IDcriptografado = Cript.criptografiaRSA(ID);
 
-	//tokenT = Protocolo2.ProtocoloDeAutenticacao(ID, chaveSimetrica, address);
+	registration ProtocoloDeRegistro(IDcriptografado, address);
+
+	chaveSimetrica = ProtocoloDeRegistro.getChaveSimetrica();
+
+	authentication ProtocoloDeAutenticacao(IDcriptografado, chaveSimetrica, address);
+
+	tokenT = ProtocoloDeAutenticacao.getTokenT();
 	
-	//objeto = Protocolo3.ProtocoloDeRequisicao(OBJ, tokenT, chaveSimetrica, address);
+	request ProtocoloDeRequisicao(OBJ, tokenT, chaveSimetrica, address);
 
-	//Criar algo para escrever o objeto
+	objeto = ProtocoloDeRequisicao.getObjeto();
+
+	ProtocoloDeRequisicao.criarObjeto(objeto);
 
 	//network::close(address);
 	//array::destroy(ID);
 	//array::destroy(chaveSimetrica);
 	//array::destroy(tokenT);
-	//array::destroy(OBJ);
+	//array::destroy(objeto);
 
 
 	return 0;

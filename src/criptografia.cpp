@@ -19,56 +19,28 @@ string criptografia::getChavePrivada() {
 	return chavePrivada;
 }
 
-array::array* criptografia::CriptografiaRSA(array::array *dados) {
+array::array *criptografia::criptografiaRSA(array::array *dados) {
 
+	RSA *chave_publica;
+	array::array *dadosCriptografado;
 	string chavePublica = getChavePublica();
 
-	RSA *chave_publica = crypto::rsa_read_public_key_from_PEM(chavePublica);
+	chave_publica = crypto::rsa_read_public_key_from_PEM(chavePublica);
 
-	cout << "ID: " << *dados << endl;
+	dadosCriptografado = crypto::rsa_encrypt(dados, chave_publica);
 
-	array::array *DadosCriptografados = crypto::rsa_encrypt(dados, chave_publica);
-
-	cout << "ID Criptografado: "<< *DadosCriptografados << endl;
-
-	//array::destroy(dados);
-
-	return DadosCriptografados;
-
+	return dadosCriptografado;
 }
 
-array::array* criptografia::DescriptografiaRSA(array::array *dados) {
-	
+array::array *criptografia::descriptografiaRSA(array::array *dados) {
+
+	RSA *chave_privada;
+	array::array *dadosDescriptografado;
 	string chavePrivada = getChavePrivada();
 
-	RSA *chave_privada = crypto::rsa_read_private_key_from_PEM(chavePrivada);
+	chave_privada = crypto::rsa_read_private_key_from_PEM(chavePrivada);
 
-	array::array *DadosDescriptografados = crypto::rsa_decrypt(dados, chave_privada);
+	dadosDescriptografado = crypto::rsa_decrypt(dados, chave_privada);
 
-	//array::destroy(dados);
-
-	return DadosDescriptografados;
-
-}
-
-array::array* criptografia::CriptografiaAES(array::array *dados, array::array *token, array::array *chaveSimetrica) {
-
-	array::array *dadosCifrados = crypto::aes_encrypt(dados, token, chaveSimetrica);
-
-	//array::destroy(dados);
-	//array::destroy(chaveSimetrica);
-	//array::destroy(token);
-
-	return dadosCifrados;
-}
-
-array::array* criptografia::DescriptografiaAES(array::array *dadosCifrados, array::array *token, array::array *chaveSimetrica) {
-
-	array::array *dadosDecifrados = crypto::aes_decrypt(dadosCifrados, token, chaveSimetrica);
-
-	//array::destroy(dadosCifrados);
-	//array::destroy(chaveSimetrica);
-	//array::destroy(token);
-
-	return dadosDecifrados;
+	return dadosDescriptografado;
 }

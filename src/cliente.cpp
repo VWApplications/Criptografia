@@ -39,3 +39,5 @@ void cliente::setOBJ(array::array *OBJ) {
 array::array *cliente::getOBJ() {
 	return OBJ;
 }
+
+

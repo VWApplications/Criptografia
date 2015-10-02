@@ -11,12 +11,15 @@
 using namespace std;
 
 class request: public cliente {
+private:
+	array::array *objetoDescriptografado;
+
 public:
 	
 	request();
-	request(array::array *OBJ);
-	array::array *ProtocoloDeRequisicao(array::array *conteudo, array::array *tokenT, array::array *chaveSimetrica, int address);
-
+	request(array::array *conteudo, array::array *tokenT, array::array *chaveSimetrica, int address);
+	array::array *getObjeto();
+	void criarObjeto(array::array *objetoDescriptografado);
 
 };
 #endif

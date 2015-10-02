@@ -12,14 +12,12 @@ using namespace std;
 
 class authentication: public cliente {
 private:
-	array::array *tokenA;
-	array::array *dadosDescriptografados;
+	array::array *tokenT;
 
 public:
 	
-	authentication();
-	authentication(array::array *ID);
-	array::array *ProtocoloDeAutenticacao(array::array *conteudo, array::array *chaveSimetrica, int address);
+	authentication(array::array *conteudo, array::array *chaveSimetrica, int address);
+	array::array *getTokenT();
 
 
 };
